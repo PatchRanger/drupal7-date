@@ -22,6 +22,8 @@ before_script:
  - drush en simpletest --yes
  - drush en date --yes
  - drush en date_repeat --yes
+# Just to test date_migrate.
+ - drush dl migrate --dev --no-cache
  - drush cc all
  - drush runserver --server=builtin 8080 &
  - sleep 4
