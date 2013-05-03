@@ -28,9 +28,9 @@ before_script:
  - drush dl features --dev --no-cache
  - drush en migrate --yes
  # Apply a patch for date_migrate.
- - cd sites/all/date
+ - cd sites/all/modules/date
  - drush iq-apply-patch 1832544
- - cd ../../../
+ - cd ../../../../
 #
  - drush cc all
  - drush runserver --server=builtin 8080 &
