@@ -53,7 +53,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
 
       $form_edit = $this->dateForm($options, 'daily_1');
       $this->verifyDateForm($form_edit);
-
+/* @todo Uncomment this.
       $form_edit = $this->dateForm($options, 'daily_2');
       $this->verifyDateForm($form_edit);
 
@@ -185,7 +185,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
 
       $form_edit = $this->dateForm($options, 'yearly_6', TRUE);
       $this->verifyDateForm($form_edit);
-
+*/
       $this->deleteDateField();
     }
   }
