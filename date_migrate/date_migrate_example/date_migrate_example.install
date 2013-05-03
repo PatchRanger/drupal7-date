@@ -9,7 +9,7 @@
  * Implements hook_enable().
  */
 function date_migrate_example_enable() {
-  Migration::registerMigration('DateExampleMigration', 'DateExample');
+  Migration::registerMigration('DateExampleMigration', 'DateExample', array('group_name' => 'Example'));
 }
 
 /**
