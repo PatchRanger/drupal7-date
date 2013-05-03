@@ -6,6 +6,13 @@
  */
 
 /**
+ * Implements hook_enable().
+ */
+function date_migrate_example_enable() {
+  Migration::registerMigration('DateExampleMigration', 'DateExample');
+}
+
+/**
  * Implements hook_disable().
  */
 function date_migrate_example_disable() {
