@@ -27,5 +27,5 @@ before_script:
  - drush vset simpletest_verbose TRUE --yes
  - cd sites/all/modules/date
 
-script: php scripts/run-tests.sh --php ~/.phpenv/versions/5.4.13/bin/php --url 'http://127.0.0.1:8080' --verbose --file tests/date.test, tests/date_api.test, tests/date_field.test, tests/date_timezone.test, tests/date_validation.test
+script: php ../../../../scripts/run-tests.sh --php ~/.phpenv/versions/5.4.13/bin/php --url 'http://127.0.0.1:8080' --verbose --file tests/date.test, tests/date_api.test, tests/date_field.test, tests/date_timezone.test, tests/date_validation.test
  #drush test-run --xml --file=sites/all/modules/moopapi/core/simpletest.test --uri=http://127.0.0.1:8080
