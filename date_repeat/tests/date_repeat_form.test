@@ -443,10 +443,10 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
     // Verify node view.
     $this->drupalGet("node/{$node->nid}");
     // Make sure that exceptions and additions work as they should.
-    if (preg_grep('/' . preg_quote('field_test[und][0][rrule][exceptions]') . '/', $edit)) {
+    if (preg_grep('/' . preg_quote('field_test[und][0][rrule][exceptions]') . '/', array_keys($edit))) {
       $this->assertNoText('2010-10-07 10:30:00');
     }
-    if (preg_grep('/' . preg_quote('field_test[und][0][rrule][additions]') . '/', $edit)) {
+    if (preg_grep('/' . preg_quote('field_test[und][0][rrule][additions]') . '/', array_keys($edit))) {
       $this->assertText('2013-10-07 10:30:00');
     }
 
