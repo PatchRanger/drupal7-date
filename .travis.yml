@@ -29,7 +29,7 @@ before_script:
  - drush en migrate --yes
  # Apply a patch for date_migrate.
  - cd sites/all/modules/date
- - drush iq-apply-patch 1832544
+ - drush iq-apply-patch 1832544 --base=base
  - cd ../../../../
 #
  - drush cc all
