@@ -151,13 +151,13 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
           $day = $direction_days[$monthday];
           $current_day = date_repeat_set_month_day($current_day, NULL, $day['direction_count'], $day['direction'], $timezone, $modify_time);
           date_repeat_add_dates($days, $current_day, $start_date, $end_date, $exceptions, $rrule);
-          if ($finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions)) {
+          if ($finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions)) {
             $period_finished = TRUE;
           }
         }
         // If it's monthly, keep looping through months, one INTERVAL at a time.
         if ($rrule['FREQ'] == 'MONTHLY') {
-          if ($finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions)) {
+          if ($finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions)) {
             $period_finished = TRUE;
           }
           // Back up to first of month and jump.
@@ -182,7 +182,7 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
         $current_day = date_repeat_set_year_day($current_day, NULL, 1, '+', $timezone, $modify_time);
         date_modify($current_day, '+' . $jump . $modify_time);
       }
-      $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions);
+      $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions);
     }
   }
 
@@ -197,7 +197,7 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
     $months = !empty($rrule['BYMONTH']) ? $rrule['BYMONTH'] : array();
     while (!$finished) {
       date_repeat_add_dates($days, $current_day, $start_date, $end_date, $exceptions, $rrule);
-      $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions);
+      $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions);
       date_modify($current_day, '+' . $jump . $modify_time);
     }
   }
@@ -261,7 +261,7 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
           }
           date_repeat_add_dates($days, $current_day, $start_date, $end_date, $exceptions, $rrule);
         }
-        $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions);
+        $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions);
         // Reset to beginning of period before jumping to next period.
         // Needed especially when working with values like 'last Saturday'
         // to be sure we don't skip months like February.
@@ -319,7 +319,7 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
               date_repeat_add_dates($days, $current_day, $start_date, $end_date, $exceptions, $rrule);
             }
           }
-          $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions);
+          $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions);
 
           // Make sure we don't get stuck in endless loop if the current
           // day never got changed above.
@@ -364,7 +364,7 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
         // Jump ahead to the next period to be evaluated.
         date_modify($current_day, '+' . $jump . $modify_time);
         $current_period = date_format($current_day, $format);
-        $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $exceptions);
+        $finished = date_repeat_is_finished($current_day, $days, $count, $end_date, $timezone, $exceptions);
       }
     }
   }
@@ -475,13 +475,15 @@ function date_repeat_add_dates(&$days, $current_day, $start_date, $end_date, $ex
  * Stop when $current_day is greater than $end_date or $count is reached
  * respecting exceptions.
  */
-function date_repeat_is_finished($current_day, &$days, $count, $end_date, array $exceptions = array()) {
+function date_repeat_is_finished($current_day, &$days, $count, $end_date, $timezone, array $exceptions = array()) {
   // Exclude exceptions.
+  $current_day_string = $current_day->format("Y-m-d");
   foreach ($exceptions as $exception) {
-    $exception_date = new DateObject($exception);
-    if ($current_day->format("Y-m-d") == $exception_date->format("Y-m-d")) {
+    $exception_date = new DateObject($exception, $timezone);
+    $exception_day_string = $exception_date->format("Y-m-d");
+    if ($current_day_string == $exception_day_string) {
       // Exclude day if it is among exceptions.
-      $key = array_search($current_day, $days);
+      $key = array_search($current_day_string, $days);
       // We wouldn't mind excluding first item.
       if ($key || $key === 0) {
         unset($days[$key]);
