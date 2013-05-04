@@ -482,8 +482,8 @@ function date_repeat_is_finished($current_day, &$days, $count, $end_date, array 
     if ($current_day->format("Y-m-d") == $exception_date->format("Y-m-d")) {
       // Exclude day if it is among exceptions.
       $key = array_search($current_day, $days);
-      // Make sure we don't exclude first item.
-      if ($key) {
+      // We wouldn't mind excluding first item.
+      if ($key || $key === 0) {
         unset($days[$key]);
       }
     }
