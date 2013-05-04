@@ -394,7 +394,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
             $date = array(
               'year' => '2010',
               'month' => '10',
-              'day' => '07'
+              'day' => '09'
             );
             $exclude_include_edit += $this->formatDateForRRULEInputs('field_test[und][0][rrule][exceptions][EXDATE][0]', $options, $date);
             break;
@@ -412,7 +412,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
             $date = array(
               'year' => '2010',
               'month' => '10',
-              'day' => '07'
+              'day' => '09'
             );
             $exclude_include_edit += $this->formatDateForRRULEInputs('field_test[und][0][rrule][exceptions][EXDATE][0]', $options, $date);
 
@@ -444,7 +444,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
     $this->drupalGet("node/{$node->nid}");
     // Make sure that exceptions and additions work as they should.
     if (preg_grep('/' . preg_quote('field_test[und][0][rrule][exceptions]') . '/', array_keys($edit))) {
-      $this->assertNoText('Thursday, October 7, 2010 - 10:30', 'Exceptions work as expected');
+      $this->assertNoText('Saturday, October 9, 2010 - 10:30', 'Exceptions work as expected');
     }
     if (preg_grep('/' . preg_quote('field_test[und][0][rrule][additions]') . '/', array_keys($edit))) {
       $this->assertText('Monday, October 7, 2013 - 10:30', 'Additions work as expected');
