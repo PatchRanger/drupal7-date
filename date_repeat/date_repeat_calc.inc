@@ -115,6 +115,9 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
   }
   $rrule = date_repeat_adjust_rrule($rrule, $start_date);
 
+  // Initialize an array of dates.
+  $days = array();
+
   // Add additional dates.
   foreach ($additions as $addition) {
     $date = new DateObject($addition . ' ' . $start_date->format('H:i:s'), $timezone);
