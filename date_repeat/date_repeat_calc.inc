@@ -115,14 +115,10 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
   }
   $rrule = date_repeat_adjust_rrule($rrule, $start_date);
 
-  // Initialize an array of dates.
-  $days = array();
-
-  // Add additional dates.
-  foreach ($additions as $addition) {
-    $date = new DateObject($addition . ' ' . $start_date->format('H:i:s'), $timezone);
-    $days[] = date_format($date, DATE_FORMAT_DATETIME);
-  }
+  // The start date always goes into the results, whether or not it meets
+  // the rules. RFC 2445 includes examples where the start date DOES NOT
+  // meet the rules, but the expected results always include the start date.
+  $days = array(date_format($start_date, DATE_FORMAT_DATETIME));
 
   // BYMONTHDAY will look for specific days of the month in one or more months.
   // This process is only valid when frequency is monthly or yearly.
@@ -365,6 +361,12 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
         $finished = date_repeat_is_finished($current_day, $days, $count, $end_date);
       }
     }
+  }
+
+  // add additional dates
+  foreach ($additions as $addition) {
+    $date = new dateObject($addition . ' ' . $start_date->format('H:i:s'), $timezone);
+    $days[] = date_format($date, DATE_FORMAT_DATETIME);
   }
 
   sort($days);
