@@ -132,9 +132,9 @@ class DateRepeatTestCase extends DrupalWebTestCase {
     $start = "1997-09-02 09:00:00";
     $end = "1997-09-30 09:00:00";
     $rule = "RRULE:FREQ=WEEKLY;INTERVAL=2;UNTIL=19970924T000000Z;WKST=SU;BYDAY=MO,WE,FR";
-    // should be (1997 9:00 AM EDT)September 2,3,5,15,17,19
+    // should be (1997 9:00 AM EDT)September 3,5,15,17,19
     $dates = date_repeat_calc($rule, $start, $end, array());
-    $shouldbe = '1997-09-02 09:00:00, 1997-09-03 09:00:00, 1997-09-05 09:00:00, 1997-09-15 09:00:00, 1997-09-17 09:00:00, 1997-09-19 09:00:00';
+    $shouldbe = '1997-09-03 09:00:00, 1997-09-05 09:00:00, 1997-09-15 09:00:00, 1997-09-17 09:00:00, 1997-09-19 09:00:00';
     $result = implode(', ', $dates);
     $this->assertEqual($result, $shouldbe, $rule . '; Starting ' . $start . ';  results: ' . $result);
 
@@ -323,7 +323,7 @@ class DateRepeatTestCase extends DrupalWebTestCase {
     $end = "2000-12-31 09:00:00";
     $rule = "RRULE:FREQ=MONTHLY;BYDAY=FR;BYMONTHDAY=13";
     $dates = date_repeat_calc($rule, $start, $end, array());
-    $shouldbe = '1997-09-02 09:00:00, 1998-02-13 09:00:00, 1998-03-13 09:00:00, 1998-11-13 09:00:00, 1999-08-13 09:00:00, 2000-10-13 09:00:00';
+    $shouldbe = '1998-02-13 09:00:00, 1998-03-13 09:00:00, 1998-11-13 09:00:00, 1999-08-13 09:00:00, 2000-10-13 09:00:00';
     $result = implode(', ', $dates);
     $this->assertEqual($result, $shouldbe, $rule . '; Starting ' . $start . ';  results: ' . $result);
 
