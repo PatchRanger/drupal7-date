@@ -195,7 +195,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
     $edit = array();
     $edit['title'] = $this->randomName(8);
     $edit['body[und][0][value]'] = $this->randomName(16);
-
+/* @todo Remove this.
     switch ($options) {
       case 'select':
         $edit['field_test[und][0][value][year]'] = '2010';
@@ -212,7 +212,7 @@ class DateRepeatFormTestCase extends DrupalWebTestCase {
         $edit['field_test[und][0][value][time]'] = '10:30';
         break;
     }
-
+*/
     // Tests that Date repeat settings function properly
     if ($test_id !== NULL) {
       $edit['field_test[und][0][show_repeat_settings]'] = TRUE;
