@@ -115,11 +115,6 @@ function _date_repeat_calc($rrule, $start, $end, $exceptions, $timezone, $additi
   }
   $rrule = date_repeat_adjust_rrule($rrule, $start_date);
 
-  // The start date always goes into the results, whether or not it meets
-  // the rules. RFC 2445 includes examples where the start date DOES NOT
-  // meet the rules, but the expected results always include the start date.
-  $days = array(date_format($start_date, DATE_FORMAT_DATETIME));
-
   // Add additional dates.
   foreach ($additions as $addition) {
     $date = new DateObject($addition . ' ' . $start_date->format('H:i:s'), $timezone);
